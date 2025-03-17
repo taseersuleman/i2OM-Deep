@@ -1,0 +1,30 @@
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout, GRU, Input
+
+model = Sequential()
+
+# Add an Input layer
+model.add(Input(shape=(563, 1)))
+
+# Replace LSTM layers with GRU layers
+model.add(GRU(units=64, activation='relu', return_sequences=True))
+model.add(Dropout(0.2))
+model.add(GRU(units=64, activation='relu', return_sequences=True))
+model.add(Dropout(0.2))
+model.add(GRU(units=64, activation='relu', return_sequences=True))
+model.add(Dropout(0.2))
+model.add(GRU(units=64, activation='relu'))
+
+# Dense layer
+model.add(Dense(units=64, activation='relu'))
+model.add(Dropout(0.2))
+
+# Output layer (adjust output units and activation as needed)
+model.add(Dense(units=1))
+
+# Compile the model
+model.compile(optimizer='adam', loss='mean_squared_error')
+
+# Print model summary
+model.summary()
